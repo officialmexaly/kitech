@@ -160,7 +160,7 @@ const KiechIndustries = () => {
 
   const teamMembers = [
     {
-      name: "Dr. Kemi Adebayo",
+      name: "Ikor .O. Kelvin",
       position: "Managing Director",
       expertise: "Strategic Leadership & Business Development",
       image: "👩‍💼"
@@ -597,7 +597,7 @@ const KiechIndustries = () => {
               <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
                 <Mail className="w-8 h-8 mx-auto mb-4 opacity-90 group-hover:scale-110 transition-transform duration-300" />
                 <h3 className="font-semibold mb-2">Email</h3>
-                <p className="opacity-80 text-sm">info@kietchindustries.com</p>
+                <p className="opacity-80 text-sm">info.kiechindustries@mexaly.com</p>
               </div>
             </div>
             
