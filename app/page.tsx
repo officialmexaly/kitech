@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronDown, Building2, Target, Eye, Heart, Users, Phone, Mail, Linkedin, Menu, X, ArrowRight, Award, TrendingUp, Shield, Clock, CheckCircle, Star, Quote, ArrowUp, Zap, Globe2, BarChart3, UserCheck } from 'lucide-react';
 
 const KiechIndustries = () => {
@@ -160,28 +161,32 @@ const KiechIndustries = () => {
 
   const teamMembers = [
     {
-      name: "Ikor .O. Kelvin",
-      position: "Managing Director",
-      expertise: "Strategic Leadership & Business Development",
-      image: "👩‍💼"
+      name: "Ikor Kelvin",
+      position: "Managing Director & Research Analyst",
+      expertise: "Dynamic Research Analyst, Project Manager, and Business Development Manager with a strong record of driving growth across Technology, Agriculture, Oil & Gas, Real Estate, Hospitality, and OEM Procurement.",
+      image: "/ikor-kelvin.jpg",
+      description: "Rooted in strategic execution, Ikor blends deep research expertise with innovative project management, enabling businesses to identify opportunities, optimize operations, and achieve sustainable success across industries and markets."
     },
     {
-      name: "Emeka Okafor",
+      name: "Muhammed Muhammed",
       position: "Head of Operations",
-      expertise: "Process Optimization & Change Management",
-      image: "👨‍💼"
+      expertise: "Agribusiness professional with expertise across production, procurement, logistics, and export systems. MSc in Agricultural Economics (in view) from Bayero University Kano.",
+      image: "/muhammed-muhammed.jpg",
+      description: "Rooted in Agriculture. Driven by Impact. Growing Beyond Borders. His work spans farm-to-market operations, trade management, and cross-border expansion, making food systems more efficient, inclusive, and profitable."
     },
     {
-      name: "Fatima Al-Hassan",
-      position: "Technology Director",
-      expertise: "Digital Transformation & IT Strategy",
-      image: "👩‍💻"
+      name: "Egbodo Paul",
+      position: "Lead IT Consultant and International Relations Manager (Manila, Philippines)",
+      expertise: "IT systems development, digital transformation, and cross-border partnerships specialist.",
+      image: "/egbodo-paul.jpg",
+      description: "Paul combines technical expertise with strategic global engagement, ensuring the company operates efficiently while expanding its international presence. Known for bridging technology with business strategy and positioning KIECH Industries for long-term success."
     },
     {
-      name: "David Okoye",
-      position: "Senior Consultant",
-      expertise: "Market Research & Analytics",
-      image: "👨‍🔬"
+      name: "Sarah Johnson",
+      position: "Senior Business Advisor",
+      expertise: "Strategic business advisory with expertise in corporate governance, financial planning, and stakeholder management.",
+      image: "/team-member-4.jpg",
+      description: "Sarah brings extensive experience in business strategy and organizational development. She specializes in helping companies navigate complex business challenges while maintaining operational excellence and sustainable growth."
     }
   ];
 
@@ -215,9 +220,9 @@ const KiechIndustries = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                KIECH Industries
-              </h1>
+              <div className="w-12 h-12 bg-black rounded flex items-center justify-center">
+                <span className="text-white font-bold text-xl">K</span>
+              </div>
             </div>
             
             {/* Desktop Navigation */}
@@ -527,15 +532,56 @@ const KiechIndustries = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="group text-center bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">{member.image}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                <div className="text-blue-600 font-medium mb-3">{member.position}</div>
-                <p className="text-gray-600 text-sm">{member.expertise}</p>
+          <div className="space-y-8">
+            {/* Top row with 3 profiles */}
+            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+              {teamMembers.slice(0, 3).map((member, index) => (
+                <div key={index} className="group text-center bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                  <div className="mb-6 flex justify-center">
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300 border-4 border-blue-200">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 96px, 96px"
+                      />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
+                  <div className="text-blue-600 font-medium mb-3">{member.position}</div>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.expertise}</p>
+                  <p className="text-gray-500 text-xs italic leading-relaxed">{member.description}</p>
+                </div>
+              ))}
+            </div>
+            
+            {/* Bottom row with remaining profiles (centered) */}
+            {teamMembers.length > 3 && (
+              <div className="flex justify-center">
+                <div className="grid gap-8" style={{ gridTemplateColumns: `repeat(${Math.min(teamMembers.length - 3, 2)}, 1fr)` }}>
+                  {teamMembers.slice(3).map((member, index) => (
+                    <div key={index + 3} className="group text-center bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 w-80">
+                      <div className="mb-6 flex justify-center">
+                        <div className="relative w-24 h-24 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300 border-4 border-blue-200">
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 96px, 96px"
+                          />
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
+                      <div className="text-blue-600 font-medium mb-3">{member.position}</div>
+                      <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.expertise}</p>
+                      <p className="text-gray-500 text-xs italic leading-relaxed">{member.description}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -617,9 +663,11 @@ const KiechIndustries = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                KIECH Industries
-              </h3>
+              <div className="mb-4">
+                <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
+                  <span className="text-black font-bold text-lg">K</span>
+                </div>
+              </div>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Transforming businesses through innovative consulting solutions across diverse industries.
               </p>
