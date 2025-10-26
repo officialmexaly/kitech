@@ -182,11 +182,12 @@ const KiechIndustries = () => {
       description: "Paul combines technical expertise with strategic global engagement, ensuring the company operates efficiently while expanding its international presence. Known for bridging technology with business strategy and positioning KIECH Industries for long-term success."
     },
     {
-      name: "Sarah Johnson",
-      position: "Senior Business Advisor",
+      name: "LAURA NTUL KPOPJI",
+      position: "Customer Relations Manager",
       expertise: "Strategic business advisory with expertise in corporate governance, financial planning, and stakeholder management.",
       image: "/team-member-4.jpg",
-      description: "Sarah brings extensive experience in business strategy and organizational development. She specializes in helping companies navigate complex business challenges while maintaining operational excellence and sustainable growth."
+      description: " Laura Ntul Kpopji is a dedicated Customer Relations Manager, bringing a strong background in Mass Communication and hands-on experience in customer service, corporate marketing, and business development. She is skilled in managing client relationships, resolving concerns with professionalism, and ensuring that every customer interaction reflects the company’s values of excellence and integrity. At KIECH Industries, Laura leverages her communication expertise, problem-solving ability, and interpersonal skills to build trust, enhance customer satisfaction, and strengthen long-term partnerships. Her passion lies in creating positive customer experiences that drive loyalty and contribute to organizational growth."
+    
     }
   ];
 
