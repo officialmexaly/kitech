@@ -1,32 +1,40 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { ChevronDown, Building2, Target, Eye, Heart, Users, Phone, Mail, Linkedin, Menu, X, ArrowRight, Award, TrendingUp, Shield, Clock, CheckCircle, Star, Quote, ArrowUp, Zap, Globe2, BarChart3, UserCheck } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { motion, useInView } from 'framer-motion';
+import {
+  ChevronDown,
+  ArrowRight,
+  Award,
+  Users,
+  Clock,
+  Star,
+  Building2,
+  Target,
+  TrendingUp,
+  Globe,
+  ShieldCheck,
+  Zap,
+  Quote
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Card from './components/ui/Card';
+import IconWrapper from './components/ui/IconWrapper';
+import SectionHeader from './components/ui/SectionHeader';
+import Container from './components/ui/Container';
+import GradientText from './components/ui/GradientText';
+import Badge from './components/ui/Badge';
+import ScrollAnimation from './components/ui/ScrollAnimation';
 
-const KiechIndustries = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [showScrollTop, setShowScrollTop] = useState(false);
+
+
+export default function HomePage() {
   const [counters, setCounters] = useState({ projects: 0, clients: 0, experience: 0, satisfaction: 0 });
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'industries', 'services', 'achievements', 'testimonials', 'team', 'process', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
-      
-      setShowScrollTop(window.scrollY > 300);
-
-      // Animate counters when achievements section is visible
       const achievementsElement = document.getElementById('achievements');
       if (achievementsElement && !hasAnimated) {
         const rect = achievementsElement.getBoundingClientRect();
@@ -46,7 +54,7 @@ const KiechIndustries = () => {
     const duration = 2000;
     const steps = 60;
     const stepTime = duration / steps;
-    
+
     let step = 0;
     const timer = setInterval(() => {
       step++;
@@ -57,676 +65,380 @@ const KiechIndustries = () => {
         experience: Math.floor(targets.experience * progress),
         satisfaction: Math.floor(targets.satisfaction * progress)
       });
-      
+
       if (step >= steps) clearInterval(timer);
     }, stepTime);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const industries = [
+  const highlights = [
     {
-      title: "Agriculture",
-      description: "Value chain analysis, productivity improvement, sustainable practices, and market expansion strategies.",
-      icon: "🌾"
+      icon: <Building2 className="w-full h-full" />,
+      title: "Industries",
+      number: "01",
+      description: "Expert consulting across Agriculture, Real Estate, Manufacturing, Technology, Logistics, and Energy sectors.",
+      link: "/industries"
     },
     {
-      title: "Real Estate", 
-      description: "Project planning, risk management, and market feasibility studies for development.",
-      icon: "🏗️"
+      icon: <Target className="w-full h-full" />,
+      title: "Services",
+      number: "02",
+      description: "Strategic planning, operations improvement, digital transformation, and comprehensive business solutions.",
+      link: "/services"
     },
     {
-      title: "Manufacturing",
-      description: "Production optimization, supply chain management, and lean manufacturing practices.",
-      icon: "⚙️"
-    },
-    {
-      title: "Technology",
-      description: "Digital transformation strategies, IT project management, and cybersecurity advisory.",
-      icon: "💻"
-    },
-    {
-      title: "Logistics",
-      description: "End-to-end logistics consulting, supply chain optimization, and warehouse management.",
-      icon: "🚛"
-    },
-    {
-      title: "Energy & Power",
-      description: "Energy project development, regulatory compliance, and sustainability solutions.",
-      icon: "⚡"
-    }
-  ];
-
-  const services = [
-    { title: "Strategic Planning", icon: <Target className="w-6 h-6" /> },
-    { title: "Operations Improvement", icon: <TrendingUp className="w-6 h-6" /> },
-    { title: "Market Research", icon: <BarChart3 className="w-6 h-6" /> },
-    { title: "Change Management", icon: <Users className="w-6 h-6" /> },
-    { title: "Project Management", icon: <CheckCircle className="w-6 h-6" /> },
-    { title: "Digital Transformation", icon: <Zap className="w-6 h-6" /> },
-    { title: "Compliance Advisory", icon: <Shield className="w-6 h-6" /> },
-    { title: "Capacity Building", icon: <UserCheck className="w-6 h-6" /> }
-  ];
-
-  const values = [
-    {
-      title: "Integrity",
-      description: "We uphold the highest ethical standards in all our engagements.",
-      icon: <Heart className="w-8 h-8 text-blue-600" />
-    },
-    {
-      title: "Excellence", 
-      description: "We deliver top-quality solutions with professionalism and precision.",
-      icon: <Target className="w-8 h-8 text-blue-600" />
-    },
-    {
-      title: "Innovation",
-      description: "We embrace change and drive innovation to stay ahead.",
-      icon: <Building2 className="w-8 h-8 text-blue-600" />
-    },
-    {
-      title: "Collaboration",
-      description: "We work closely with clients to co-create value.",
-      icon: <Users className="w-8 h-8 text-blue-600" />
-    }
-  ];
-
-  const testimonials = [
-    {
-      quote: "KIECH Industries transformed our operations completely. Their strategic insights led to a 40% increase in efficiency.",
-      author: "Sarah Johnson",
-      position: "CEO, AgriTech Solutions",
-      rating: 5
-    },
-    {
-      quote: "The team's expertise in digital transformation helped us modernize our entire workflow. Exceptional service.",
-      author: "Michael Chen",
-      position: "Director, Manufacturing Corp",
-      rating: 5
-    },
-    {
-      quote: "Professional, reliable, and results-driven. They exceeded our expectations in every aspect of the project.",
-      author: "Emma Davis",
-      position: "COO, Logistics Network",
-      rating: 5
-    }
-  ];
-
-  const teamMembers = [
-    {
-      name: "Ikor Kelvin",
-      position: "Managing Director & Research Analyst",
-      expertise: "Dynamic Research Analyst, Project Manager, and Business Development Manager with a strong record of driving growth across Technology, Agriculture, Oil & Gas, Real Estate, Hospitality, and OEM Procurement.",
-      image: "/ikor-kelvin.jpg",
-      description: "Rooted in strategic execution, Ikor blends deep research expertise with innovative project management, enabling businesses to identify opportunities, optimize operations, and achieve sustainable success across industries and markets."
-    },
-    {
-      name: "Muhammed Muhammed",
-      position: "Head of Operations",
-      expertise: "Agribusiness professional with expertise across production, procurement, logistics, and export systems. MSc in Agricultural Economics (in view) from Bayero University Kano.",
-      image: "/muhammed-muhammed.jpg",
-      description: "Rooted in Agriculture. Driven by Impact. Growing Beyond Borders. His work spans farm-to-market operations, trade management, and cross-border expansion, making food systems more efficient, inclusive, and profitable."
-    },
-    {
-      name: "Egbodo Paul",
-      position: "Lead IT Consultant and International Relations Manager (Manila, Philippines)",
-      expertise: "IT systems development, digital transformation, and cross-border partnerships specialist.",
-      image: "/egbodo-paul.jpg",
-      description: "Paul combines technical expertise with strategic global engagement, ensuring the company operates efficiently while expanding its international presence. Known for bridging technology with business strategy and positioning KIECH Industries for long-term success."
-    },
-    {
-      name: "LAURA NTUL KPOPJI",
-      position: "Customer Relations Manager",
-      expertise: "Strategic business advisory with expertise in corporate governance, financial planning, and stakeholder management.",
-      image: "/team-member-4.jpg",
-      description: " Laura Ntul Kpopji is a dedicated Customer Relations Manager, bringing a strong background in Mass Communication and hands-on experience in customer service, corporate marketing, and business development. She is skilled in managing client relationships, resolving concerns with professionalism, and ensuring that every customer interaction reflects the company’s values of excellence and integrity. At KIECH Industries, Laura leverages her communication expertise, problem-solving ability, and interpersonal skills to build trust, enhance customer satisfaction, and strengthen long-term partnerships. Her passion lies in creating positive customer experiences that drive loyalty and contribute to organizational growth."
-    
-    }
-  ];
-
-  const processSteps = [
-    {
-      step: "01",
-      title: "Discovery",
-      description: "We analyze your business, understand challenges, and identify opportunities for growth."
-    },
-    {
-      step: "02", 
-      title: "Strategy",
-      description: "We develop customized solutions and create a comprehensive action plan."
-    },
-    {
-      step: "03",
-      title: "Implementation",
-      description: "We execute the strategy with precision, ensuring seamless integration."
-    },
-    {
-      step: "04",
-      title: "Optimization",
-      description: "We monitor results, make adjustments, and ensure sustainable success."
+      icon: <TrendingUp className="w-full h-full" />,
+      title: "Our Approach",
+      number: "03",
+      description: "Data-driven strategies combined with industry expertise to deliver measurable results and sustainable growth.",
+      link: "/about"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-lg shadow-sm z-50 border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-black rounded flex items-center justify-center">
-                <span className="text-white font-bold text-xl">K</span>
-              </div>
-            </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-6">
-                {['home', 'about', 'industries', 'services', 'achievements', 'testimonials', 'team', 'process', 'contact'].map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollToSection(item)}
-                    className={`px-3 py-2 text-sm font-medium capitalize transition-all duration-300 ${
-                      activeSection === item 
-                        ? 'text-blue-600 border-b-2 border-blue-600 transform scale-105' 
-                        : 'text-gray-700 hover:text-blue-600 hover:scale-105'
-                    }`}
-                  >
-                    {item === 'achievements' ? 'Stats' : item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-blue-600 transition-colors duration-200"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white/95 backdrop-blur-lg border-t border-gray-200">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {['home', 'about', 'industries', 'services', 'achievements', 'testimonials', 'team', 'process', 'contact'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item)}
-                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 capitalize w-full text-left transition-colors duration-200"
-                >
-                  {item === 'achievements' ? 'Stats' : item}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
-
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Hero Section */}
-      <section id="home" className="pt-16 min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-          <div className="absolute top-40 left-1/2 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        </div>
+      <section className="pt-16 min-h-screen relative overflow-hidden">
+        {/* Professional gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-50)] via-white to-[var(--slate-50)]"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex items-center min-h-screen">
+        {/* Subtle diagonal pattern overlay - Corporate Professional */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              45deg,
+              var(--primary-900),
+              var(--primary-900) 1px,
+              transparent 1px,
+              transparent 20px
+            )`
+          }}
+        ></div>
+
+        <Container className="relative py-20 flex items-center min-h-screen">
           <div className="text-center w-full">
-            <div>
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                KIECH Industries
-                <span className="block text-3xl md:text-5xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mt-2">
-                  Limited
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              {/* Excellence Badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-5 py-2 glass-professional rounded-full mb-6 shadow-sm"
+              >
+                <Award className="w-4 h-4 text-[var(--primary-900)]" />
+                <span className="text-sm font-semibold text-[var(--primary-900)]">
+                  Excellence in Management Consulting
                 </span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+              </motion.div>
+
+              {/* Trust Indicator */}
+              <p className="text-[var(--slate-600)] text-sm mb-6">
+                Trusted by 150+ Organizations Since 2015
+              </p>
+
+              {/* Main Headline - Corporate Professional Sizing */}
+              <motion.h1
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--slate-950)] mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                KIECH Industries
+                <motion.span
+                  className="block text-xl md:text-3xl lg:text-4xl mt-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  <GradientText>Limited</GradientText>
+                </motion.span>
+              </motion.h1>
+
+              {/* Tagline */}
+              <motion.p
+                className="text-xl md:text-2xl text-[var(--slate-600)] mb-10 max-w-4xl mx-auto leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+              >
                 Transforming businesses through innovative consulting solutions across diverse industries
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button 
-                  onClick={() => scrollToSection('about')}
-                  className="group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 flex items-center gap-2 transform hover:scale-105"
-                >
-                  Discover More 
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="group border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-105"
-                >
-                  Get Started
-                </button>
-              </div>
-            </div>
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.9 }}
+              >
+                <Link href="/about">
+                  <Button
+                    variant="default"
+                    size="lg"
+                  >
+                    Discover More
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
+
+                <Link href="/contact">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
-        
+        </Container>
+
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <ChevronDown className="w-6 h-6 text-gray-400 animate-bounce" />
-        </div>
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ChevronDown className="w-6 h-6 text-[var(--slate-400)]" />
+        </motion.div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-white relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">About Us</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8"></div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              KIECH Industries Limited is a dynamic management consulting firm committed to delivering 
-              transformative solutions across diverse industries worldwide.
-            </p>
-          </div>
+      {/* Highlights Section */}
+      <section className="py-20 bg-white relative">
+        <Container>
+          <ScrollAnimation animation="slide-in-left">
+            <SectionHeader
+              eyebrow="What We Offer"
+              heading="Comprehensive Consulting Solutions"
+              description="Designed to drive your business forward with proven strategies and measurable results"
+              align="center"
+            />
+          </ScrollAnimation>
 
-          {/* Mission & Vision */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <div className="group bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="flex items-center mb-4">
-                <Target className="w-8 h-8 text-blue-600 mr-3" />
-                <h3 className="text-2xl font-bold text-gray-900">Our Mission</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                To empower businesses across diverse sectors by providing strategic consulting services 
-                that foster innovation, efficiency, and sustainable growth.
-              </p>
-            </div>
-            
-            <div className="group bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="flex items-center mb-4">
-                <Eye className="w-8 h-8 text-indigo-600 mr-3" />
-                <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                To be a leading management consulting firm renowned for excellence, impact, 
-                and transformative solutions across global industries.
-              </p>
-            </div>
-          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {highlights.map((highlight, index) => (
+              <ScrollAnimation key={index} delay={index * 0.1} animation="zoom-in">
+                <Link href={highlight.link} className="block h-full">
+                  <Card
+                    variant="corporate"
+                    padding="lg"
+                    hover={true}
+                    className="h-full group cursor-pointer flex flex-col"
+                  >
+                    {/* Number prefix */}
+                    <div className="flex items-start justify-between mb-6">
+                      <IconWrapper
+                        icon={highlight.icon}
+                        shape="rounded"
+                        size="lg"
+                        variant="primary"
+                        animate={true}
+                      />
+                      <span className="text-5xl font-bold text-[var(--primary-100)] leading-none">
+                        {highlight.number}
+                      </span>
+                    </div>
 
-          {/* Core Values */}
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Core Values</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {values.map((value, index) => (
-                <div key={index} className="group text-center p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 hover:from-blue-50 hover:to-indigo-50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
-                  <div className="flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {value.icon}
-                  </div>
-                  <h4 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+                    <h3 className="text-2xl font-bold text-[var(--slate-950)] mb-4">
+                      {highlight.title}
+                    </h3>
 
-      {/* Industries Section */}
-      <section id="industries" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Industries We Serve</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8"></div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Specialized consulting solutions across key industry sectors with deep expertise and proven results.
-            </p>
-          </div>
+                    <p className="text-[var(--slate-600)] leading-relaxed mb-6 flex-grow">
+                      {highlight.description}
+                    </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.map((industry, index) => (
-              <div key={index} className="group bg-white/70 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1">
-                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300">{industry.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">{industry.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{industry.description}</p>
-              </div>
+                    <div className="flex items-center text-[var(--primary-900)] font-semibold group-hover:translate-x-1 transition-transform duration-300 mt-auto">
+                      Learn More
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </div>
+                  </Card>
+                </Link>
+              </ScrollAnimation>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Services</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8"></div>
-          </div>
+      {/* Achievements Section - Corporate Professional */}
+      <section id="achievements" className="py-20 relative overflow-hidden bg-[var(--slate-50)]">
+        {/* Subtle texture overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.02]"
+          style={{
+            backgroundImage: `radial-gradient(circle, var(--primary-900) 1px, transparent 1px)`,
+            backgroundSize: '20px 20px'
+          }}
+        ></div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {services.map((service, index) => (
-              <div key={index} className="group bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-100">
-                <div className="text-blue-600 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm">{service.title}</h3>
-              </div>
-            ))}
-          </div>
-
-          {/* Why Choose Us */}
-          <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-3xl">
-            <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Why Choose KIECH Industries?</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                { title: "Industry Expertise", desc: "Deep knowledge across multiple sectors with proven track record" },
-                { title: "Customized Solutions", desc: "Every client engagement is unique and tailored to specific needs" },
-                { title: "Results-Oriented", desc: "Measurable outcomes and ROI-driven strategies for sustainable growth" },
-                { title: "Global Perspective", desc: "Combining local insights with international best practices" },
-                { title: "Trusted Advisors", desc: "Building lasting relationships grounded in trust and performance" },
-                { title: "Innovation Focus", desc: "Leveraging cutting-edge methodologies and emerging technologies" }
-              ].map((point, index) => (
-                <div key={index} className="group flex items-start space-x-4 p-4 rounded-xl hover:bg-white/50 transition-all duration-300">
-                  <div className="flex-shrink-0 w-3 h-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mt-2 group-hover:scale-125 transition-transform duration-300"></div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">{point.title}</h4>
-                    <p className="text-gray-600 text-sm">{point.desc}</p>
-                  </div>
-                </div>
-              ))}
+        <Container className="relative">
+          <ScrollAnimation animation="zoom-in">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[var(--slate-950)]">Our Impact</h2>
+              <div className="w-24 h-1 bg-[var(--primary-900)] mx-auto mb-6 rounded-full"></div>
+              <p className="text-xl text-[var(--slate-600)] max-w-3xl mx-auto">
+                Numbers that speak to our commitment to excellence and client success
+              </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Achievements Section */}
-      <section id="achievements" className="py-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Achievements</h2>
-            <div className="w-24 h-1 bg-white mx-auto mb-8"></div>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">
-              Numbers that speak to our commitment to excellence and client success.
-            </p>
-          </div>
+          </ScrollAnimation>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Award className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="text-4xl font-bold mb-2">{counters.projects}+</div>
-                <div className="text-sm opacity-90">Projects Completed</div>
-              </div>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Users className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="text-4xl font-bold mb-2">{counters.clients}+</div>
-                <div className="text-sm opacity-90">Happy Clients</div>
-              </div>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Clock className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="text-4xl font-bold mb-2">{counters.experience}+</div>
-                <div className="text-sm opacity-90">Years Experience</div>
-              </div>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Star className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="text-4xl font-bold mb-2">{counters.satisfaction}%</div>
-                <div className="text-sm opacity-90">Client Satisfaction</div>
-              </div>
-            </div>
+            {[
+              { icon: Award, value: counters.projects, suffix: '+', label: 'Projects Completed' },
+              { icon: Users, value: counters.clients, suffix: '+', label: 'Happy Clients' },
+              { icon: Clock, value: counters.experience, suffix: '+', label: 'Years Experience' },
+              { icon: Star, value: counters.satisfaction, suffix: '%', label: 'Client Satisfaction' }
+            ].map((stat, index) => (
+              <ScrollAnimation key={index} delay={index * 0.1} animation="fade-in-up">
+                <motion.div
+                  className="text-center group h-full"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="bg-white p-8 rounded-2xl border-2 border-[var(--slate-200)] shadow-sm hover:border-[var(--primary-900)] hover:shadow-md transition-all duration-300 h-full flex flex-col items-center justify-center">
+                    <div className="mb-4 flex justify-center">
+                      <IconWrapper
+                        icon={<stat.icon className="w-full h-full" />}
+                        shape="rounded"
+                        size="lg"
+                        variant="primary"
+                        animate={true}
+                      />
+                    </div>
+
+                    <motion.div
+                      className="text-4xl font-bold mb-2 text-[var(--primary-900)]"
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ type: "spring", stiffness: 200, delay: index * 0.1 + 0.3 }}
+                    >
+                      {stat.value}{stat.suffix}
+                    </motion.div>
+                    <div className="text-sm text-[var(--slate-600)] font-medium leading-tight">{stat.label}</div>
+                  </div>
+                </motion.div>
+              </ScrollAnimation>
+            ))}
           </div>
-        </div>
+        </Container>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-20 bg-white">
+        <Container>
+          <ScrollAnimation>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-[var(--slate-950)] mb-6">
+                Why Industry Leaders Choose Us
+              </h2>
+              <div className="w-24 h-1 bg-[var(--primary-900)] mx-auto rounded-full"></div>
+            </div>
+          </ScrollAnimation>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Globe,
+                title: "Global Perspective",
+                desc: "Combining international best practices with deep local market insights."
+              },
+              {
+                icon: ShieldCheck,
+                title: "Uncompromising Integrity",
+                desc: "We adhere to the highest ethical standards in every engagement."
+              },
+              {
+                icon: Zap,
+                title: "Innovative Agility",
+                desc: "Rapidly adapting strategies to meet the evolving demands of your industry."
+              }
+            ].map((item, i) => (
+              <ScrollAnimation key={i} delay={i * 0.1}>
+                <Card variant="default" padding="lg" hover={true} className="h-full text-center">
+                  <div className="mb-6 flex justify-center">
+                    <div className="p-4 rounded-full bg-[var(--primary-50)] text-[var(--primary-900)]">
+                      <item.icon className="w-8 h-8" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-[var(--slate-950)] mb-3">{item.title}</h3>
+                  <p className="text-[var(--slate-600)]">{item.desc}</p>
+                </Card>
+              </ScrollAnimation>
+            ))}
+          </div>
+        </Container>
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Client Testimonials</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8"></div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Hear what our clients say about their transformative experiences with KIECH Industries.
-            </p>
-          </div>
+      <section className="py-20 bg-[var(--slate-50)] relative overflow-hidden">
+        <Container>
+          <ScrollAnimation animation="slide-in-right">
+            <SectionHeader
+              eyebrow="Testimonials"
+              heading="What Our Clients Say"
+              description="Trusted partners in success across the globe"
+              align="center"
+            />
+          </ScrollAnimation>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="group bg-white/70 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                <Quote className="w-8 h-8 text-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-6 italic leading-relaxed">&ldquo;{testimonial.quote}&rdquo;</p>
-                <div>
-                  <div className="font-semibold text-gray-900">{testimonial.author}</div>
-                  <div className="text-sm text-gray-600">{testimonial.position}</div>
-                </div>
-              </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                quote: "KIECH Industries transformed our supply chain logistics, saving us 30% in operational costs within the first year.",
+                author: "Michael Roberts",
+                role: "COO, Apex Logistics"
+              },
+              {
+                quote: "Their strategic insight into the agricultural sector helped us expand into three new international markets.",
+                author: "Sarah Jenkins",
+                role: "Director, GreenLeaf Agribusiness"
+              },
+              {
+                quote: "Professional, knowledgeable, and reliable. They truly understand the complexities of modern manufacturing.",
+                author: "David Chen",
+                role: "CEO, TechBuild Manufacturing"
+              }
+            ].map((testimonial, i) => (
+              <ScrollAnimation key={i} delay={i * 0.1} animation="zoom-out">
+                <Card variant="corporate" padding="lg" className="h-full italic relative">
+                  <Quote className="w-10 h-10 text-[var(--primary-100)] absolute top-6 right-6" />
+                  <p className="text-[var(--slate-700)] mb-6 z-10 relative">"{testimonial.quote}"</p>
+                  <div>
+                    <div className="font-bold text-[var(--slate-950)]">{testimonial.author}</div>
+                    <div className="text-sm text-[var(--primary-600)]">{testimonial.role}</div>
+                  </div>
+                </Card>
+              </ScrollAnimation>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Team Section */}
-      <section id="team" className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Leadership Team</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8"></div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Meet the experienced professionals driving innovation and excellence at KIECH Industries.
+      {/* CTA Section */}
+      <section className="py-20 bg-white">
+        <Container size="lg" className="text-center">
+          <ScrollAnimation animation="fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--slate-950)] mb-6">
+              Ready to <GradientText>Transform Your Business?</GradientText>
+            </h2>
+            <p className="text-xl text-[var(--slate-600)] mb-8 max-w-2xl mx-auto">
+              Let's work together to achieve your goals and drive sustainable growth
             </p>
-          </div>
-
-          <div className="space-y-8">
-            {/* Top row with 3 profiles */}
-            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-              {teamMembers.slice(0, 3).map((member, index) => (
-                <div key={index} className="group text-center bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                  <div className="mb-6 flex justify-center">
-                    <div className="relative w-24 h-24 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300 border-4 border-blue-200">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 96px, 96px"
-                      />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                  <div className="text-blue-600 font-medium mb-3">{member.position}</div>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.expertise}</p>
-                  <p className="text-gray-500 text-xs italic leading-relaxed">{member.description}</p>
-                </div>
-              ))}
-            </div>
-            
-            {/* Bottom row with remaining profiles (centered) */}
-            {teamMembers.length > 3 && (
-              <div className="flex justify-center">
-                <div className="grid gap-8" style={{ gridTemplateColumns: `repeat(${Math.min(teamMembers.length - 3, 2)}, 1fr)` }}>
-                  {teamMembers.slice(3).map((member, index) => (
-                    <div key={index + 3} className="group text-center bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 w-80">
-                      <div className="mb-6 flex justify-center">
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300 border-4 border-blue-200">
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 96px, 96px"
-                          />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                      <div className="text-blue-600 font-medium mb-3">{member.position}</div>
-                      <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.expertise}</p>
-                      <p className="text-gray-500 text-xs italic leading-relaxed">{member.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+            <Link href="/contact">
+              <Button
+                variant="default"
+                size="xl"
+              >
+                Contact Us Today
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </Link>
+          </ScrollAnimation>
+        </Container>
       </section>
-
-      {/* Process Section */}
-      <section id="process" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Process</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8"></div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              A proven methodology that ensures successful project delivery and lasting business transformation.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {processSteps.map((step, index) => (
-              <div key={index} className="group relative">
-                <div className="bg-white/70 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    {step.step}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{step.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
-                </div>
-                {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <ArrowRight className="w-6 h-6 text-blue-600" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h2>
-            <div className="w-24 h-1 bg-white mx-auto mb-8"></div>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">
-              Ready to transform your business? Connect with our team of experts and start your journey today.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            <div className="group text-center">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Phone className="w-8 h-8 mx-auto mb-4 opacity-90 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="font-semibold mb-2">Phone</h3>
-                <p className="opacity-80 text-sm">+234 810 441 8967</p>
-              </div>
-            </div>
-            
-            <div className="group text-center">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Mail className="w-8 h-8 mx-auto mb-4 opacity-90 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="font-semibold mb-2">Email</h3>
-                <p className="opacity-80 text-sm">info.kiechindustries@mexaly.com</p>
-              </div>
-            </div>
-            
-            <div className="group text-center">
-              <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                <Linkedin className="w-8 h-8 mx-auto mb-4 opacity-90 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="font-semibold mb-2">LinkedIn</h3>
-                <p className="opacity-80 text-sm">[Insert LinkedIn URL]</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="mb-4">
-                <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
-                  <span className="text-black font-bold text-lg">K</span>
-                </div>
-              </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Transforming businesses through innovative consulting solutions across diverse industries.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Strategic Planning</li>
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Operations Improvement</li>
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Digital Transformation</li>
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Change Management</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Industries</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Agriculture</li>
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Technology</li>
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Manufacturing</li>
-                <li className="hover:text-white transition-colors duration-200 cursor-pointer">Energy & Power</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Connect</h4>
-              <div className="flex space-x-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
-                  <Linkedin className="w-5 h-5" />
-                </div>
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
-                  <Globe2 className="w-5 h-5" />
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 pt-8 text-center">
-            <p className="text-gray-400">&copy; 2025 KIECH Industries Limited. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-
-      {/* Scroll to Top Button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 z-50"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
-      )}
     </div>
   );
-};
-
-export default KiechIndustries;
+}
