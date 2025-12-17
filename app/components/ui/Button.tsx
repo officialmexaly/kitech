@@ -1,10 +1,10 @@
 "use client"
 
 import React, { type ButtonHTMLAttributes, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { motion, HTMLMotionProps } from 'framer-motion';
+import { Loader2 } from 'lucide-react';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends HTMLMotionProps<"button"> {
   variant?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'link';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   children: ReactNode;

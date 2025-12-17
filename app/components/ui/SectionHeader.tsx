@@ -1,9 +1,9 @@
 "use client"
 
-import React, { type HTMLAttributes, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-export interface SectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
+export interface SectionHeaderProps extends HTMLMotionProps<"div"> {
   eyebrow?: string;
   heading: string;
   description?: string;

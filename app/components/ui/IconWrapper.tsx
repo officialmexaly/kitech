@@ -1,9 +1,9 @@
 "use client"
 
-import React, { type HTMLAttributes, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import React, { type ReactNode } from 'react';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-export interface IconWrapperProps extends HTMLAttributes<HTMLDivElement> {
+export interface IconWrapperProps extends HTMLMotionProps<"div"> {
   icon: ReactNode;
   shape?: 'circle' | 'square' | 'rounded';
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -63,19 +63,20 @@ const IconWrapper = React.forwardRef<HTMLDivElement, IconWrapperProps>(
     const baseStyles =
       'flex items-center justify-center transition-all duration-250';
 
+    const variantStyles = getVariantStyles();
+
     return (
       <motion.div
         ref={ref}
-        className={`${baseStyles} ${shapes[shape]} ${sizes[size]} ${
-          typeof getVariantStyles() === 'string' ? getVariantStyles() : ''
-        } ${className}`}
-        style={typeof getVariantStyles() === 'object' ? getVariantStyles() : undefined}
+        className={`${baseStyles} ${shapes[shape]} ${sizes[size]} ${typeof variantStyles === 'string' ? variantStyles : ''
+          } ${className}`}
+        style={typeof variantStyles === 'object' ? variantStyles : undefined}
         whileHover={
           animate
             ? {
-                rotate: 2,
-                scale: 1.05,
-              }
+              rotate: 2,
+              scale: 1.05,
+            }
             : undefined
         }
         transition={{ duration: 0.3 }}

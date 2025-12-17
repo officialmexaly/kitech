@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   Wheat,
   Building2,
@@ -16,7 +16,6 @@ import {
 import Card from '../components/ui/Card';
 import IconWrapper from '../components/ui/IconWrapper';
 import { Button } from '@/components/ui/button';
-import SectionHeader from '../components/ui/SectionHeader';
 import Container from '../components/ui/Container';
 import GradientText from '../components/ui/GradientText';
 import ScrollAnimation from '../components/ui/ScrollAnimation';

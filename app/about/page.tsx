@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Target, Eye, Heart, Users, Building2 } from 'lucide-react';
 import ScrollAnimation from '../components/ui/ScrollAnimation';
 

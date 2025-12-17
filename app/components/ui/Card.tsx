@@ -1,9 +1,9 @@
 "use client"
 
 import React, { type HTMLAttributes, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+export interface CardProps extends HTMLMotionProps<"div"> {
   variant?: 'standard' | 'elevated' | 'glass' | 'bordered' | 'corporate';
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   children: ReactNode;

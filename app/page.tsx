@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   ChevronDown,
   ArrowRight,
@@ -24,7 +24,6 @@ import IconWrapper from './components/ui/IconWrapper';
 import SectionHeader from './components/ui/SectionHeader';
 import Container from './components/ui/Container';
 import GradientText from './components/ui/GradientText';
-import Badge from './components/ui/Badge';
 import ScrollAnimation from './components/ui/ScrollAnimation';
 
 
@@ -357,7 +356,7 @@ export default function HomePage() {
               }
             ].map((item, i) => (
               <ScrollAnimation key={i} delay={i * 0.1}>
-                <Card variant="default" padding="lg" hover={true} className="h-full text-center">
+                <Card variant="standard" padding="lg" hover={true} className="h-full text-center">
                   <div className="mb-6 flex justify-center">
                     <div className="p-4 rounded-full bg-[var(--primary-50)] text-[var(--primary-900)]">
                       <item.icon className="w-8 h-8" />
@@ -405,7 +404,7 @@ export default function HomePage() {
               <ScrollAnimation key={i} delay={i * 0.1} animation="zoom-out">
                 <Card variant="corporate" padding="lg" className="h-full italic relative">
                   <Quote className="w-10 h-10 text-[var(--primary-100)] absolute top-6 right-6" />
-                  <p className="text-[var(--slate-700)] mb-6 z-10 relative">"{testimonial.quote}"</p>
+                  <p className="text-[var(--slate-700)] mb-6 z-10 relative">&quot;{testimonial.quote}&quot;</p>
                   <div>
                     <div className="font-bold text-[var(--slate-950)]">{testimonial.author}</div>
                     <div className="text-sm text-[var(--primary-600)]">{testimonial.role}</div>
@@ -425,7 +424,7 @@ export default function HomePage() {
               Ready to <GradientText>Transform Your Business?</GradientText>
             </h2>
             <p className="text-xl text-[var(--slate-600)] mb-8 max-w-2xl mx-auto">
-              Let's work together to achieve your goals and drive sustainable growth
+              Let&apos;s work together to achieve your goals and drive sustainable growth
             </p>
             <Link href="/contact">
               <Button
